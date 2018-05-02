@@ -1,0 +1,23 @@
+<div class="center jumbotron">
+  <h1>Modifier Gossip !</h1>
+  <%= link_to 'Supprimer ce gossip', gossip_path(@gossip),
+    method: :delete, 
+    class: "btn btn-lg btn-danger",
+    data: { confirm: 'Etes-vous sure de vouloir supprimer ce gossip?' } %>
+</div>
+
+<div class="bg-light mt-5 p-5 offset-lg-2 col-lg-8 shadow">
+
+<%= form_tag gossip_path(@gossip), method: "put" do %>
+  <div class="form-group">
+    <label for="anonymous_author">Auteur anonyme</label>
+    <%= text_field_tag :anonymous_author, @gossip.anonymous_author, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <label for="anonymous_author">Contenu</label>
+    <%= text_area_tag :content, @gossip.content, class: 'form-control' %>
+  </div>
+  <%= submit_tag "Enregistrer", class: 'btn btn-primary' %>
+<% end %>
+
+</div>

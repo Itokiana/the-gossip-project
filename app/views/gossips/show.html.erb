@@ -1,0 +1,54 @@
+<div class="center jumbotron">
+  <h1>Gossip: <%= @gossip.anonymous_author %></h1>
+  <h3>
+    <em><%= @gossip.content %></em>
+  </h3>
+  
+  <%= link_to "Editer", {controller: 'gossips', action:'edit', id: @gossip.id}, class: "btn btn-lg btn-primary" %>
+  <%= link_to "Retour", {controller: 'gossips', action:'index'}, class: "btn btn-lg btn-success" %>
+  </div>
+  
+<div class="row">
+  <div class="bg-light mt-1 p-5 col-lg-8">
+    <div class="list-group">
+      <% 
+        if @comments
+          @comments.each do |c|
+       %>
+      <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1"><b><%= c.anonymous_commentor %></b></h5>
+        </div>
+        <p class="mb-1"><%= c.body %></p>
+        <%= link_to 'Supprimer ce commentaire', comment_path(c),
+        method: :delete, 
+        class: "btn btn-sm btn-secondary",
+        data: { confirm: 'Etes-vous sure de vouloir supprimer ce commentaire?' } %>
+      </a>
+      <% 
+          end
+        end 
+      %>
+    </div>
+  </div>
+
+
+  <div class="bg-light shadow mt-1 p-5 col-lg-4">
+    <h3>Ajouter un commentaire</h3>
+    <form action="<%= comments_path %>" method="post">
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+      <input type="hidden" name="gossip" value="<%= @gossip.id %>">
+        <div class="form-group">
+          <label for="anonymous_commentor">Auteur anonyme</label>
+          <input type="text" class="form-control" id="anonymous_commentor" name="anonymous_commentor" placeholder="Entrer votre pseudo">
+        </div>
+        <div class="form-group">
+          <label for="content">Contenu</label>
+          <textarea class="form-control" name="body" id="body" placeholder="Votre commentaire"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Commenter</button>
+    </form>
+  </div>
+
+
+</div>
